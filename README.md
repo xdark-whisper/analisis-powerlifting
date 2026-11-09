@@ -122,6 +122,35 @@ Comparando solo equipamiento Raw y el mismo período (2023 en adelante):
   5.600 filas argentinas contra unas 471.000 del resto; cada fila es una
   competencia y no una persona; no se hizo ninguna prueba estadística.
 
+### ¿Cuánta diferencia hay entre competir con y sin equipamiento?
+*Consultas: `sql/05_equipamiento.sql`*
+
+![Equipamiento](images/equipamiento.png)
+
+Mismas personas que compitieron en Raw y en Single-ply (desde 2015), con su mejor
+resultado en cada modalidad:
+
+| | Levantadores | Dots Raw | Dots Single-ply | Diferencia |
+|---|---|---|---|---|
+| Mujeres | 8.244 | 324,3 | 356,1 | +31,8 |
+| Hombres | 19.913 | 362,7 | 375,2 | +12,5 |
+
+Por levantamiento (en veces el peso corporal, Single-ply menos Raw):
+
+| | Sentadilla | Banca | Peso muerto |
+|---|---|---|---|
+| Mujeres | +0,29 | +0,14 | +0,05 |
+| Hombres | +0,19 | +0,10 | -0,06 |
+
+- Con las mismas personas, el traje suma Dots: más en mujeres que en hombres.
+- Comparando personas distintas, el resultado se invierte (Single-ply queda por
+  debajo de Raw), lo que indica que quienes compiten con traje son un grupo
+  distinto, y por eso conviene comparar a las mismas personas.
+- La mayor ayuda está en la sentadilla, luego la banca, y casi nula en el peso muerto.
+- Salvedades: solo cuenta a quienes probaron ambas modalidades; se usa el mejor
+  resultado de cada persona; se identifica a las personas por nombre y sexo;
+  no se controló el tiempo transcurrido entre una modalidad y otra.
+
 ## Limitaciones
 - "Argentina" se define por el país de la competencia, no por la nacionalidad
   del levantador.
