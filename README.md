@@ -65,6 +65,21 @@ Se partió de 4.059.940 filas y quedaron 2.591.805.
   competencia) y se va achicando (+2,7 hacia la décima).
 - El 45% de los levantadores compitió una sola vez.
 
+### ¿A qué edad se alcanza el pico de fuerza?
+*Consultas: `sql/03_edad.sql`*
+
+![Pico de edad](images/edad.png)
+
+- El Dots promedio llega a su máximo a los 27 años en hombres (390,0) y a los
+  24 en mujeres (346,5).
+- A los 40 años el promedio está un 6% por debajo del pico, a los 50 un 13% y
+  a los 60 un 22%, con valores casi iguales en ambos sexos.
+- Después de los 30 la baja es gradual y de forma parecida en ambos sexos.
+- Los resultados se calculan solo con equipamiento Raw y edades exactas.
+- Salvedades: cada edad promedia a personas distintas, y quienes compiten a
+  edades altas son un grupo seleccionado. La edad de la mejor marca depende
+  también de cuándo se compite, y no solo de cuándo se está más fuerte.
+
 ### ¿Qué tanto mejoran los levantadores según su edad al debutar?
 *Consultas: `sql/03_edad.sql`*
 
