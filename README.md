@@ -1,8 +1,12 @@
 # Análisis de powerlifting con Python y SQL
 
-Análisis exploratorio de más de 2,5 millones de resultados de competencias de
-powerlifting para entender cómo se distribuye la fuerza según sexo, edad, peso
-corporal y país, y cómo se compara Argentina con el resto del mundo.
+> **Resumen:** analicé 2,6 millones de resultados de competencias de powerlifting
+> (OpenPowerlifting) con Python y SQL (CTEs y funciones de ventana) para ver cómo
+> progresan los levantadores, a qué edad rinden más, cómo se compara Argentina con
+> el mundo y cuánto suma el equipamiento. Lo central: la mayor mejora ocurre entre
+> la primera y la segunda competencia y después se achica; el pico promedio está
+> alrededor de los 24 a 27 años; Argentina está en línea con el resto del mundo; y
+> comparar personas distintas o las mismas personas puede dar conclusiones opuestas.
 
 ## Preguntas que busca responder
 - ¿A qué edad se alcanza el pico de fuerza? 
@@ -17,20 +21,34 @@ Cada fila es un levantador en una competencia. Los datos no se incluyen en
 este repo por su tamaño; ver "Cómo reproducirlo".
 
 ## Herramientas
-Python (pandas, matplotlib, seaborn), SQLite, Jupyter, Git/GitHub.
+Python (pandas, matplotlib), SQLite, Jupyter, Git/GitHub.
 
 ## Estructura del repo
 - `src/`: scripts de limpieza y carga a SQLite
 - `sql/`: consultas con comentarios
 - `notebooks/`: exploración y análisis
+- `images/`: gráficos ilustrativos
 - `data/`: datos (no versionados)
 
 ## Cómo reproducirlo
-1. Clonar el repo y crear un entorno virtual con Python 3.13.
-2. Instalar dependencias: `pip install -r requirements.txt`
-3. Descargar el CSV de openpowerlifting.org y guardarlo como `data/raw/openpowerlifting.csv`
-4. Ejecutar `python src/limpieza.py`
-5. Ejecutar `python src/cargar_sqlite.py`
+1. Clonar el repo:
+   ```
+   git clone https://github.com/xdark-whisper/analisis-powerlifting.git
+   cd analisis-powerlifting
+   ```
+2. Crear el entorno virtual con Python 3.13 e instalar dependencias (PowerShell):
+   ```
+   py -3.13 -m venv venv
+   venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. Descargar el CSV desde openpowerlifting.org (sección Data), descomprimirlo,
+   crear la carpeta `data/raw` y guardarlo ahí como `openpowerlifting.csv`
+   (el archivo viene con la fecha en el nombre, hay que renombrarlo).
+4. `python src/limpieza.py` genera `data/clean/powerlifting_clean.csv`.
+5. `python src/cargar_sqlite.py` genera `data/powerlifting.db`.
+6. Ejecutar las consultas de `sql/` con DB Browser for SQLite (o similar) y abrir
+   los notebooks de `notebooks/` en VS Code o Jupyter, con el kernel del entorno virtual.
 
 ## Decisiones de limpieza
 Se partió de 4.059.940 filas y quedaron 2.591.805.
@@ -42,31 +60,28 @@ Se partió de 4.059.940 filas y quedaron 2.591.805.
   cargada dos veces en la misma competencia.
 - No se borraron las filas sin edad (36% del dataset original): los análisis
   por edad usan solo las filas que la tienen.
-- En SBD, de los que tienen edad informada, la mayoría tiene entre 5 y 11 años. 
-  Eso confirma que son niños.
-- Fuera de SBD hay adultos con totales de 1 kg y 2,5 kg (BVDK, CBLB), 
-  que no parecen resultados reales sino errores de carga o valores de relleno.
+- Entre los totales más bajos de las competencias completas (SBD), la mayoría
+  corresponde a niños de 5 a 11 años: son resultados válidos y se conservan.
+- Fuera de SBD hay adultos con totales de 1 a 2,5 kg (federaciones BVDK y
+  CBLB), que no parecen resultados reales sino errores de carga. No afectan el
+  análisis porque se trabaja solo con SBD.
 
 ## Hallazgos
 ### ¿Cómo progresa un levantador a lo largo de sus competencias?
 *Consultas: `sql/02_funciones_ventana.sql`*
 
+![Progresión de Dots](images/progresion.png)
+
 - El Dots promedio sube de 312,6 en la primera competencia a 383,9 en la décima.
 - La mejora es mayor al principio (+17,9 entre la primera y la segunda) y se
   achica a +2,7 hacia la décima.
+- Entre la primera y la quinta competencia pasan en promedio 2,9 años.
 - Hipótesis descartada: no se quedan los que arrancaron más fuertes. El Dots de
   la primera competencia es casi igual (310 a 313) sin importar cuántas
   competencias hagan después.
-- Salvedad: no se controló equipamiento ni edad.
-
-![Progresión de Dots](images/progresion.png)
-
-- Los levantadores que compiten más veces no arrancan más fuertes: el Dots de
-  la primera competencia es prácticamente el mismo (310 a 313) sin importar
-  cuántas competencias hagan después.
-- La mejora es mayor al principio (+17,9 Dots entre la primera y la segunda
-  competencia) y se va achicando (+2,7 hacia la décima).
 - El 45% de los levantadores compitió una sola vez.
+- Salvedades: no se controló equipamiento ni edad, y cada punto promedia solo a
+  quienes llegaron a esa competencia (790.161 en la primera, 51.531 en la décima).
 
 ### ¿A qué edad se alcanza el pico de fuerza?
 *Consultas: `sql/03_edad.sql`*
@@ -77,7 +92,8 @@ Se partió de 4.059.940 filas y quedaron 2.591.805.
   24 en mujeres (346,5).
 - A los 40 años el promedio está un 6% por debajo del pico, a los 50 un 13% y
   a los 60 un 22%, con valores casi iguales en ambos sexos.
-- Después de los 30 la baja es gradual y de forma parecida en ambos sexos.
+- La edad en que más levantadores logran su mejor Dots es a los 23 años
+  en ambos sexos, pero eso depende también de cuándo se compite.
 - Los resultados se calculan solo con equipamiento Raw y edades exactas.
 - Salvedades: cada edad promedia a personas distintas, y quienes compiten a
   edades altas son un grupo seleccionado. La edad de la mejor marca depende
@@ -120,9 +136,10 @@ Comparando solo equipamiento Raw y el mismo período (2023 en adelante):
   hombres y algo por encima en mujeres.
 - Mi hipótesis inicial era que Argentina estaba por encima del mundo. Al
   controlar por equipamiento, sexo y período, la diferencia casi desaparece.
-- El promedio argentino sube con los años, pero parte de esa suba se debe a que
-  cambian las federaciones que aportan datos (por ejemplo, desde 2024 aparecen
-  FESUPO e IPL, con promedios más altos).
+- El promedio argentino sube con los años, pero parte de esa suba se debe a
+  cambios en qué federaciones aportan datos: FESUPO en 2024 (273 registros,
+  Dots 387,9) e IPL en 2025 (226 registros, Dots 412,0) tienen promedios más
+  altos que el resto.
 - Salvedades: "Argentina" se define por el país de la competencia; hay unas
   5.600 filas argentinas contra unas 471.000 del resto; cada fila es una
   competencia y no una persona; no se hizo ninguna prueba estadística.
@@ -158,16 +175,18 @@ Por levantamiento (en veces el peso corporal, Single-ply menos Raw):
 
 ## Hipótesis y resultados
 
-| Hipótesis inicial	| Resultado |
+| Hipótesis inicial | Resultado |
 |---|---|
-| Quienes siguen compitiendo arrancaron más fuertes |	No: el Dots de la primera competencia es casi igual (310 a 313) |
-| Argentina rinde más que el mundo |	Casi desaparece al controlar por equipamiento, sexo y período |
-| El equipamiento suma 10 a 15 puntos de Dots |	Hombres +12,5, mujeres +31,8 (mismas personas) |
-| El equipamiento ayuda más en sentadilla |	Confirmado en ambos sexos |
+| Quienes siguen compitiendo arrancaron más fuertes | No: el Dots de la primera competencia es casi igual (310 a 313) |
+| Los de 20 a 30 años son los que más mejoran | No: los menores de 20 mejoran más (+61,3 contra +44,7) |
+| Argentina rinde más que el mundo | Casi desaparece al controlar por equipamiento, sexo y período |
+| El equipamiento suma 10 a 15 puntos de Dots | Hombres +12,5, mujeres +31,8 (mismas personas, traje Single-ply) |
+| El equipamiento ayuda más en sentadilla | Confirmado en ambos sexos |
+| Donde menos ayuda es en banca | No: el que menos gana es el peso muerto |
 
 ## Conclusiones
 
-- **Los levantadores mejoran rápido al principio y después se estancan**: el Dots
+- **Los levantadores mejoran rápido al principio y después la mejora se va achicando**: el Dots
   promedio sube de 312,6 en la primera competencia a 383,9 en la décima, con una
   mejora de +17,9 entre la primera y la segunda que se achica a +2,7 hacia la décima.
 - **Quienes siguen compitiendo no arrancaron más fuertes**: el nivel de la primera
@@ -191,9 +210,18 @@ Por levantamiento (en veces el peso corporal, Single-ply menos Raw):
 ## Limitaciones
 - "Argentina" se define por el país de la competencia, no por la nacionalidad
   del levantador.
-- Cada fila es una competencia, no una persona: quienes compiten más veces
-  pesan más en los promedios.
-- La edad aumenta el promedio en levantadores más jovenes, al mejorar más rápido.
+- Cada fila es una competencia, no una persona. No hay identificador único: se
+  identifica a cada levantador por nombre y sexo, así que nombres repetidos o
+  escritos distinto pueden mezclar o separar personas.
+- Los promedios por número de competencia comparan grupos que se achican: quienes
+  llegan a la décima son una minoría que siguió compitiendo.
+- Falta la edad en el 36% del dataset original; los análisis por edad usan solo
+  las filas que la tienen, y con equipamiento Raw.
+- No se hicieron pruebas estadísticas: las diferencias chicas (por ejemplo
+  Argentina en hombres) no deben leerse como concluyentes.
+- OpenPowerlifting se actualiza varias veces por día: si se descarga en otra
+  fecha, las cifras pueden variar levemente. Las de este informe corresponden a
+  la descarga del 4/11/2026.
 
 ## Autor
 Ramirez Sergio Ezequiel - https://github.com/xdark-whisper
