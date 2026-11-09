@@ -9,8 +9,7 @@ corporal y país, y cómo se compara Argentina con el resto del mundo.
 - ¿Cómo progresa un levantador entre su primera y sus siguientes competencias?
 - ¿Cómo se compara el rendimiento de Argentina con el resto del mundo? 
 - ¿Qué tanto mejoran en promedio los levantadores más jóvenes? 
-- ¿Cuánta diferencia hay entre competir con y sin equipamiento? *(pendiente)*
-
+- ¿Cuánta diferencia hay entre competir con y sin equipamiento? 
 
 ## Datos
 Proyecto OpenPowerlifting (openpowerlifting.org), de dominio público (CC0).
@@ -43,6 +42,10 @@ Se partió de 4.059.940 filas y quedaron 2.591.805.
   cargada dos veces en la misma competencia.
 - No se borraron las filas sin edad (36% del dataset original): los análisis
   por edad usan solo las filas que la tienen.
+- En SBD, de los que tienen edad informada, la mayoría tiene entre 5 y 11 años. 
+  Eso confirma que son niños.
+- Fuera de SBD hay adultos con totales de 1 kg y 2,5 kg (BVDK, CBLB), 
+  que no parecen resultados reales sino errores de carga o valores de relleno.
 
 ## Hallazgos
 ### ¿Cómo progresa un levantador a lo largo de sus competencias?
@@ -96,6 +99,8 @@ Mejora de Dots entre la 1ª y la 5ª competencia (solo equipamiento Raw):
 - Cuanto más joven se debuta, mayor es la mejora.
 - Quienes debutan entre 20 y 29 años llegan a la quinta competencia con el
   mejor nivel (398,5), aunque mejoran menos que los menores de 20.
+- Los que debutan entre 30 y 39 llegan a la quinta competencia 
+  con un nivel (374,2) casi igual al de los menores de 20 (373,7).
 - Salvedades: solo se incluyen quienes llegaron a 5 competencias Raw con edad
   informada, y no se controla el tiempo transcurrido entre competencias.
 
@@ -150,6 +155,38 @@ Por levantamiento (en veces el peso corporal, Single-ply menos Raw):
 - Salvedades: solo cuenta a quienes probaron ambas modalidades; se usa el mejor
   resultado de cada persona; se identifica a las personas por nombre y sexo;
   no se controló el tiempo transcurrido entre una modalidad y otra.
+
+## Hipótesis y resultados
+
+| Hipótesis inicial	| Resultado |
+|---|---|
+| Quienes siguen compitiendo arrancaron más fuertes |	No: el Dots de la primera competencia es casi igual (310 a 313) |
+| Argentina rinde más que el mundo |	Casi desaparece al controlar por equipamiento, sexo y período |
+| El equipamiento suma 10 a 15 puntos de Dots |	Hombres +12,5, mujeres +31,8 (mismas personas) |
+| El equipamiento ayuda más en sentadilla |	Confirmado en ambos sexos |
+
+## Conclusiones
+
+- **Los levantadores mejoran rápido al principio y después se estancan**: el Dots
+  promedio sube de 312,6 en la primera competencia a 383,9 en la décima, con una
+  mejora de +17,9 entre la primera y la segunda que se achica a +2,7 hacia la décima.
+- **Quienes siguen compitiendo no arrancaron más fuertes**: el nivel de la primera
+  competencia es casi el mismo (310 a 313) sin importar cuántas competencias hagan
+  después. El 45% compitió una sola vez.
+- **El pico está en los 20 y pocos años**: a los 27 en hombres y a los 24 en
+  mujeres. A los 40, 50 y 60 años el Dots promedio está un 6%, 13% y 22% respectivamente, 
+  por debajo del máximo, de forma casi igual en ambos sexos.
+- **Cuanto más joven se debuta, más se mejora**: +61,3 de Dots entre la primera y
+  la quinta competencia para quienes debutan antes de los 20, contra +18,4 para
+  quienes lo hacen a los 50 o más.
+- **Argentina está en línea con el resto del mundo**: comparando solo Raw y el
+  mismo período, queda 3,2 puntos por debajo en hombres y 10,4 por encima en mujeres.
+- **El equipamiento (traje de una capa) suma Dots**: +12,5 en hombres y +31,8 en
+  mujeres comparando a las mismas personas, con la mayor ayuda en la sentadilla y
+  casi nada en el peso muerto.
+- **Aprendizaje metodológico**: comparar grupos de personas distintas y comparar a
+  las mismas personas dio resultados opuestos (en equipamiento y en la
+  progresión), por eso cada comparación se hizo de las dos formas.
 
 ## Limitaciones
 - "Argentina" se define por el país de la competencia, no por la nacionalidad
