@@ -8,6 +8,9 @@ corporal y país, y cómo se compara Argentina con el resto del mundo.
 - ¿A qué edad se alcanza el pico de fuerza?
 - ¿Cómo progresa un levantador entre su primera y sus siguientes competencias?
 - ¿Cómo se compara el rendimiento de Argentina con el resto del mundo?
+## ¿Qué tanto mejoran en promedio los levantadores más jovenes? 
+## ¿Cuánta diferencia hay entre competir con y sin equipamiento?
+
 
 ## Datos
 Proyecto OpenPowerlifting (openpowerlifting.org), de dominio público (CC0).
@@ -42,13 +45,32 @@ Se partió de 4.059.940 filas y quedaron 2.591.805.
   por edad usan solo las filas que la tienen.
 
 ## Hallazgos
-[pendiente: acá van los gráficos y las conclusiones principales]
+### ¿Cómo progresa un levantador a lo largo de sus competencias?
+*Consultas: `sql/02_funciones_ventana.sql`*
+
+- El Dots promedio sube de 312,6 en la primera competencia a 383,9 en la décima.
+- La mejora es mayor al principio (+17,9 entre la primera y la segunda) y se
+  achica a +2,7 hacia la décima.
+- Hipótesis descartada: no se quedan los que arrancaron más fuertes. El Dots de
+  la primera competencia es casi igual (310 a 313) sin importar cuántas
+  competencias hagan después.
+- Salvedad: no se controló equipamiento ni edad.
+
+![Progresión de Dots](images/progresion.png)
+
+- Los levantadores que compiten más veces no arrancan más fuertes: el Dots de
+  la primera competencia es prácticamente el mismo (310 a 313) sin importar
+  cuántas competencias hagan después.
+- La mejora es mayor al principio (+17,9 Dots entre la primera y la segunda
+  competencia) y se va achicando (+2,7 hacia la décima).
+- El 45% de los levantadores compitió una sola vez.
 
 ## Limitaciones
 - "Argentina" se define por el país de la competencia, no por la nacionalidad
   del levantador.
 - Cada fila es una competencia, no una persona: quienes compiten más veces
   pesan más en los promedios.
+- La edad aumenta el promedio en levantadores más jovenes, al mejorar más rápido.
 
 ## Autor
 Ramirez Sergio Ezequiel - https://github.com/xdark-whisper
