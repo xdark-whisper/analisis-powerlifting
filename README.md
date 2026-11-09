@@ -7,7 +7,7 @@ corporal y país, y cómo se compara Argentina con el resto del mundo.
 ## Preguntas que busca responder
 - ¿A qué edad se alcanza el pico de fuerza? 
 - ¿Cómo progresa un levantador entre su primera y sus siguientes competencias?
-- ¿Cómo se compara el rendimiento de Argentina con el resto del mundo? *(pendiente: falta controlar por equipamiento)*
+- ¿Cómo se compara el rendimiento de Argentina con el resto del mundo? 
 - ¿Qué tanto mejoran en promedio los levantadores más jóvenes? 
 - ¿Cuánta diferencia hay entre competir con y sin equipamiento? *(pendiente)*
 
@@ -98,6 +98,29 @@ Mejora de Dots entre la 1ª y la 5ª competencia (solo equipamiento Raw):
   mejor nivel (398,5), aunque mejoran menos que los menores de 20.
 - Salvedades: solo se incluyen quienes llegaron a 5 competencias Raw con edad
   informada, y no se controla el tiempo transcurrido entre competencias.
+
+### ¿Cómo se compara Argentina con el resto del mundo?
+*Consultas: `sql/04_argentina.sql`*
+
+![Argentina vs mundo](images/argentina.png)
+
+Comparando solo equipamiento Raw y el mismo período (2023 en adelante):
+
+| | Argentina | Resto del mundo | Diferencia |
+|---|---|---|---|
+| Hombres | 358,9 | 362,1 | -3,2 |
+| Mujeres | 337,7 | 327,3 | +10,4 |
+
+- Argentina está en línea con el resto del mundo: apenas por debajo en
+  hombres y algo por encima en mujeres.
+- Mi hipótesis inicial era que Argentina estaba por encima del mundo. Al
+  controlar por equipamiento, sexo y período, la diferencia casi desaparece.
+- El promedio argentino sube con los años, pero parte de esa suba se debe a que
+  cambian las federaciones que aportan datos (por ejemplo, desde 2024 aparecen
+  FESUPO e IPL, con promedios más altos).
+- Salvedades: "Argentina" se define por el país de la competencia; hay unas
+  5.600 filas argentinas contra unas 471.000 del resto; cada fila es una
+  competencia y no una persona; no se hizo ninguna prueba estadística.
 
 ## Limitaciones
 - "Argentina" se define por el país de la competencia, no por la nacionalidad
